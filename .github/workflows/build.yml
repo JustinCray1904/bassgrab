@@ -13,10 +13,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Build and run the bass-detection tests
+      - name: Bass-only tests (808 / saw, detuned, 44.1-48 kHz)
         run: |
           g++ -std=c++17 -O2 -Wall -Wextra tests/test_analyzer.cpp -o test_analyzer
           ./test_analyzer
+      - name: Melody-loop test (bass must be separated from lead + chords + hats)
+        run: |
+          g++ -std=c++17 -O2 -Wall -Wextra tests/test_mix.cpp -o test_mix
+          ./test_mix
 
   build:
     name: Plugin (${{ matrix.name }})
